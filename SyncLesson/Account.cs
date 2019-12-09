@@ -11,12 +11,12 @@ namespace SyncLesson
 
         public void ProcessMoney(object sum)
         {
-            Monitor.Enter(syncObject);
+            var semaphore = new Semaphore(3, 3);
 
             Sum += (int)sum;
             Console.WriteLine(Sum);
 
-            Monitor.Exit(syncObject);
+            semaphore.Release();
         }
     }
 }
