@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace SyncLesson
 {
@@ -6,7 +7,21 @@ namespace SyncLesson
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var account = new Account();
+
+            for (var i = 0; i < 100; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    ThreadPool.QueueUserWorkItem(account.ProcessMoney, 100);
+                }
+                else
+                {
+                    ThreadPool.QueueUserWorkItem(account.ProcessMoney, -100);
+                }
+                Thread.Sleep(5);
+            }
+            Console.ReadLine();
         }
     }
 }
