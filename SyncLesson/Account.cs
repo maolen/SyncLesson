@@ -2,18 +2,17 @@
 
 namespace SyncLesson
 {
-    public class Account
+
+    [Synchronization]
+    public class Account : ContextBoundObject
     {
         private object syncObject = new object();
         public int Sum { get; set; } = 1000;
-        
+
         public void ProcessMoney(object sum)
         {
-            lock (syncObject)
-            {
-                Sum += (int)sum;
-                Console.WriteLine(Sum);
-            }
+            Sum += (int)sum;
+            Console.WriteLine(Sum);
         }
     }
 }
