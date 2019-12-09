@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Threading;
 
 namespace SyncLesson
 {
 
-    [Synchronization]
     public class Account : ContextBoundObject
     {
         private object syncObject = new object();
@@ -11,8 +11,12 @@ namespace SyncLesson
 
         public void ProcessMoney(object sum)
         {
+            Monitor.Enter(syncObject);
+
             Sum += (int)sum;
             Console.WriteLine(Sum);
+
+            Monitor.Exit(syncObject);
         }
     }
 }
